@@ -1,0 +1,59 @@
+<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Golden Gate Ships</title><style>
+html,body{margin:0;height:100%;background:#0b0f17;color:#e8edf5;font-family:system-ui,Segoe UI,Roboto,sans-serif;overflow:hidden}
+#app{display:grid;grid-template-columns:62% 38%;grid-template-rows:9vh 1fr;height:100vh;gap:1.2vh;padding:1.2vh;box-sizing:border-box}
+header{grid-column:1/3;display:flex;justify-content:space-between;align-items:center;padding:0 1.5vw;background:#141b28;border-radius:1vh}
+h1{margin:0;font-size:4.2vh;color:#f0643c}#clock{font-size:5vh;font-weight:700}#upd{font-size:2vh;color:#8a96a8}
+.card{background:#141b28;border-radius:1vh;padding:1.6vh 1.4vw;overflow:hidden}
+#hero{display:grid;grid-template-rows:auto 1fr;gap:1.2vh}
+#imgs{display:flex;gap:1vw;height:46vh}#imgs img{flex:1;min-width:0;object-fit:contain;border-radius:.8vh;background:#000}
+.nm{font-size:6vh;font-weight:800;line-height:1.1}.sub{font-size:3vh;color:#9fb0c8;font-style:italic}
+.ln{font-size:3.2vh;margin-top:.6vh}.dir{font-size:3.4vh;margin-top:1vh;font-weight:600}
+.in{color:#5fd38d}.out{color:#f6c25b}
+#side{display:grid;grid-template-rows:1fr auto;gap:1.2vh;min-height:0}
+h2{margin:0 0 1vh;font-size:2.8vh;color:#f0643c;text-transform:uppercase;letter-spacing:.1em}
+.row{display:flex;justify-content:space-between;font-size:2.5vh;padding:.55vh 0;border-bottom:1px solid #222c3d;white-space:nowrap}
+.row span:first-child{overflow:hidden;text-overflow:ellipsis;margin-right:1vw}.muted{color:#8a96a8}
+#cam img{width:100%;max-height:30vh;object-fit:contain;border-radius:.8vh}
+#bottom{display:grid;gap:1.2vh;grid-auto-rows:min-content}
+/* mobile-layout */
+@media (max-width:900px),(orientation:portrait){
+html,body{height:auto;overflow-x:hidden;overflow-y:auto}
+#app{display:flex;flex-direction:column;height:auto;gap:12px;padding:10px;width:100%;max-width:100%}
+header{flex-direction:column;align-items:flex-start;gap:4px;padding:10px 12px;border-radius:10px}
+h1{font-size:20px}#clock{font-size:22px}#upd{font-size:13px}header>div{text-align:left!important}
+.card{padding:12px;border-radius:10px}
+#hero{display:block}#imgs{flex-direction:column;height:auto;gap:8px;margin-bottom:10px}
+#imgs img{width:100%;height:auto;flex:none;border-radius:8px}
+.nm{font-size:26px;overflow-wrap:anywhere}.sub{font-size:16px}.ln{font-size:17px;margin-top:4px}.dir{font-size:17px;margin-top:8px}
+#side,#bottom{display:flex;flex-direction:column;gap:12px}
+h2{font-size:15px;margin-bottom:8px}
+.row{font-size:15px;padding:7px 0;white-space:normal;flex-wrap:wrap;gap:2px 10px}
+.row span:first-child{margin-right:0;overflow-wrap:anywhere}
+#cam img{max-height:none;height:auto}
+}
+</style></head><body><div id="app">
+<header><h1>🌉 Golden Gate Ship Movements</h1><div style="text-align:right"><div id="clock"></div><div id="upd"></div></div></header>
+<div class="card" id="hero"></div>
+<div id="side"><div class="card" id="recent"></div><div id="bottom"><div class="card" id="exp"></div><div class="card" id="cam" style="display:none"></div></div></div>
+</div><script>
+const flag=c=>c&&c.length==2?String.fromCodePoint(...[...c.toUpperCase()].map(x=>127397+x.charCodeAt())):'';
+const n=x=>x==null?'':Number(x).toLocaleString('en-US');
+const e=s=>String(s??'').replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));
+function clock(){document.getElementById('clock').textContent=new Date().toLocaleTimeString('en-US',{timeZone:'America/Los_Angeles',hour:'numeric',minute:'2-digit'})+' PT'}
+setInterval(clock,1000);clock();let last='';
+async function load(){try{const r=await fetch('data.json?'+Date.now());const t=await r.text();if(t===last)return;last=t;render(JSON.parse(t))}catch(x){}}
+function render(d){document.getElementById('upd').textContent='Updated '+d.updated;
+const h=d.crossings[0];if(h){const inb=h.direction=='inbound';
+const size=[h.gt?n(h.gt)+' GT':'',h.length_ft?`${n(h.length_ft)}' L x ${n(h.width_ft)}' W`:''].filter(Boolean).join(' • ');
+const rt=(h.origin||h.dest)?`${h.origin||''} ➤ ${h.dest||''}`:'';
+document.getElementById('hero').innerHTML=`<div id="imgs">${h.photo?`<img src="${h.photo}">`:''}${h.map?`<img src="${h.map}">`:''}</div>
+<div><div class="nm">${e(h.name)} ${flag(h.flag)} ${e(h.flag||'')}</div><div class="sub">${[h.company,h.type].filter(Boolean).map(e).join(' • ')}</div>
+${size?`<div class="ln">${size}</div>`:''}${rt?`<div class="ln">${e(rt)}</div>`:''}
+<div class="ln">${h.sog??''} knots • ${h.time} <span class="muted">${h.date}</span>${h.pilot?' • Pilot: '+e(h.pilot):''}</div>
+<div class="dir ${inb?'in':'out'}">${inb?'⬅ Inbound under the Golden Gate into the Bay':'➡ Outbound under the Golden Gate to the Pacific'}</div></div>`}
+document.getElementById('recent').innerHTML='<h2>Recent crossings</h2>'+d.crossings.slice(0,10).map(c=>`<div class="row"><span>${c.direction=='inbound'?'<b class=in>IN</b>':'<b class=out>OUT</b>'} ${flag(c.flag)} ${e(c.name)}</span><span class="muted">${c.time}</span></div>`).join('');
+document.getElementById('exp').innerHTML='<h2>Expected next 24h</h2>'+(d.expected.length?d.expected.slice(0,6).map(x=>`<div class="row"><span>${e(x.name)} · ${e(x.type||'')}${x.gt?' · '+n(x.gt)+' GT':''}</span><span class="muted">${e(x.eta)} → ${e(x.port||x.dest||'')}</span></div>`).join(''):'<div class="row muted">No expected arrivals listed</div>');
+const cm=document.getElementById('cam');if(d.cam){cm.style.display='';cm.innerHTML=`<h2>${e(d.cam.ship)} bridge cam</h2><img src="${d.cam.url}?${Date.now()}">`}else cm.style.display='none'}
+load();setInterval(load,60000);setTimeout(()=>location.reload(),6*3600e3);
+</script></body></html>

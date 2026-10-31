@@ -1,0 +1,98 @@
+<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#0b0f17"><meta name="apple-mobile-web-app-capable" content="yes"><link rel="icon" href="favicon.ico" sizes="16x16 32x32 48x48"><link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png"><link rel="apple-touch-icon" href="apple-touch-icon.png">
+<title>Golden Gate Ships</title><style>
+html,body{margin:0;height:100%;background:#0b0f17;color:#e8edf5;font-family:system-ui,Segoe UI,Roboto,sans-serif;overflow:hidden}
+#app{display:grid;grid-template-columns:62% 38%;grid-template-rows:9vh 1fr;height:100vh;gap:1.2vh;padding:1.2vh;box-sizing:border-box}
+header{grid-column:1/3;display:flex;justify-content:space-between;align-items:center;padding:0 1.5vw;background:#141b28;border-radius:1vh}
+h1{margin:0;font-size:4.2vh;color:#f0643c}#clock{font-size:5vh;font-weight:700}#upd{font-size:2vh;color:#8a96a8}
+.card{background:#141b28;border-radius:1vh;padding:1.6vh 1.4vw;overflow:hidden}
+#hero{display:grid;grid-template-rows:auto 1fr;gap:1.2vh}
+#imgs{display:flex;gap:1vw;height:46vh}#imgs img{flex:1;min-width:0;object-fit:contain;border-radius:.8vh;background:#000}
+.nm{font-size:6vh;font-weight:800;line-height:1.1}.sub{font-size:3vh;color:#9fb0c8;font-style:italic}
+.ln{font-size:3.2vh;margin-top:.6vh}.dir{font-size:3.4vh;margin-top:1vh;font-weight:600}
+.in{color:#5fd38d}.out{color:#f6c25b}
+#side{display:grid;grid-template-rows:1fr auto;gap:1.2vh;min-height:0}
+h2{margin:0 0 1vh;font-size:2.8vh;color:#f0643c;text-transform:uppercase;letter-spacing:.1em}
+.row{display:flex;justify-content:space-between;font-size:2.5vh;padding:.55vh 0;border-bottom:1px solid #222c3d;white-space:nowrap}
+.row span:first-child{overflow:hidden;text-overflow:ellipsis;margin-right:1vw}.muted{color:#8a96a8}
+#cam img{width:100%;max-height:30vh;object-fit:contain;border-radius:.8vh}
+#bottom{display:grid;gap:1.2vh;grid-auto-rows:min-content}
+#hero.hascard{display:grid;grid-template-columns:auto 1fr;grid-template-rows:1fr;gap:1.4vw}
+#cardimg{height:100%;max-height:83vh;width:auto;border-radius:.8vh;display:block}
+.badge{display:inline-flex;align-items:center;justify-content:center;width:1.3em;height:1.3em;border-radius:50%;color:#0f1b33;font-size:.85em;margin-right:.4em;vertical-align:-.1em}
+.bin{background:#40c4aa}.bout{background:#ff8a3d}.ct{color:#ff8a3d;font-weight:700}
+.xr{font-size:2vh;padding:.7vh 0;border-bottom:1px solid #222c3d;line-height:1.35}.xr .t{font-size:2.3vh;font-weight:700}
+.xr div{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+#recent{overflow:hidden;min-height:0}#anch .ab{display:grid;grid-template-columns:26% minmax(0,1fr);gap:1vw;align-items:start}#anch .ab>div{min-width:0}
+#anch .th{display:block;position:relative;aspect-ratio:1/1;border-radius:.8vh;overflow:hidden;background:#0f1b33}
+#anch .th img{width:100%;height:100%;object-fit:cover;object-position:50% 0%;display:block}
+#anch .th span{position:absolute;left:0;right:0;bottom:0;background:rgba(11,15,23,.8);font-size:1.5vh;text-align:center;padding:.3vh 0;color:#cfd8e6}
+#anch .ar{display:flex;align-items:baseline;gap:.5vw;font-size:1.6vh;line-height:2.05vh;white-space:nowrap}
+#anch .ar .dot{width:1vh;height:1vh;border-radius:50%;flex:none;align-self:center}
+#anch .ar .nmx{font-weight:700;flex:none}#anch .ar .wf{color:#8a96a8;overflow:hidden;text-overflow:ellipsis;flex:1;min-width:0}
+#anch .ar .w{flex:none;font-weight:700}
+#anch .lg{display:flex;flex-wrap:wrap;gap:.3vh .9vw;font-size:1.5vh;color:#9fb0c8;margin-top:.6vh}
+#anch .lg i{display:inline-block;width:1vh;height:1vh;border-radius:50%;margin-right:.3vw}
+.gap{height:1.4vh}
+#side{grid-template-rows:minmax(0,1fr) auto}#hero .nm{font-size:5vh}#exp .row:nth-child(n+5){display:none}#anch h2,#exp h2{margin-bottom:.6vh}
+/* mobile-layout */
+@media all{
+html,body{height:auto;overflow-x:hidden;overflow-y:auto}
+#app{display:flex;flex-direction:column;height:auto;gap:12px;padding:10px;width:100%;max-width:100%}
+header{flex-direction:column;align-items:flex-start;gap:4px;padding:10px 12px;border-radius:10px}
+h1{font-size:20px}#clock{font-size:22px}#upd{font-size:13px}header>div{text-align:left!important}
+.card{padding:12px;border-radius:10px}
+#hero{display:block}#imgs{flex-direction:column;height:auto;gap:8px;margin-bottom:10px}
+#imgs img{width:100%;height:auto;flex:none;border-radius:8px}
+.nm{font-size:26px;overflow-wrap:anywhere}.sub{font-size:16px}.ln{font-size:17px;margin-top:4px}.dir{font-size:17px;margin-top:8px}
+#side,#bottom{display:flex;flex-direction:column;gap:12px}
+h2{font-size:15px;margin-bottom:8px}
+.row{font-size:15px;padding:7px 0;white-space:normal;flex-wrap:wrap;gap:2px 10px}
+.row span:first-child{margin-right:0;overflow-wrap:anywhere}
+#cam img{max-height:none;height:auto}
+#hero.hascard{display:block}#cardimg{width:100%;height:auto;max-height:none;margin-bottom:10px}
+.xr{font-size:14px;padding:8px 0}.xr .t{font-size:16px}.xr div{white-space:normal}#anch .ab{grid-template-columns:1fr}#anch .th{aspect-ratio:16/10}#anch .th span{font-size:12px;padding:3px 0}
+#anch .ar{font-size:14px;line-height:1.35;white-space:normal;flex-wrap:wrap;gap:2px 8px;padding:5px 0;border-bottom:1px solid #222c3d}
+#anch .ar .dot{width:9px;height:9px}#anch .ar .wf{flex-basis:100%;order:3;padding-left:17px;white-space:normal}#anch .ar .w{margin-left:auto}
+#anch .lg{font-size:12px;gap:4px 12px;margin-top:8px}#anch .lg i{width:9px;height:9px;margin-right:4px}
+#hero .nm{font-size:22px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}#exp .row:nth-child(n+5){display:flex}.gap{height:10px}
+}
+/* phone-first */
+html{-webkit-text-size-adjust:100%}body{padding:env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left)}
+#app{max-width:720px;margin:0 auto;box-sizing:border-box}img{max-width:100%}a{color:#7fb6ff}a,button{min-height:44px}
+@media (min-width:760px){#app{padding:16px;gap:16px}h1{font-size:24px}}
+</style></head><body><div id="app">
+<header><h1>🌉 Golden Gate Ship Movements</h1><div style="text-align:right"><div id="clock"></div><div id="upd"></div></div></header>
+<div class="card" id="hero"></div>
+<div id="side"><div class="card" id="recent"></div><div id="bottom"><div class="card" id="anch" style="display:none"></div><div class="card" id="exp"></div><div class="card" id="cam" style="display:none"></div></div></div>
+</div><script>
+const flag=c=>c&&c.length==2?String.fromCodePoint(...[...c.toUpperCase()].map(x=>127397+x.charCodeAt())):'';
+const n=x=>x==null?'':Number(x).toLocaleString('en-US');
+const e=s=>String(s??'').replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));
+function clock(){document.getElementById('clock').textContent=new Date().toLocaleTimeString('en-US',{timeZone:'America/Los_Angeles',hour:'numeric',minute:'2-digit'})+' PT'}
+setInterval(clock,1000);clock();let last='';
+async function load(){try{const r=await fetch('data.json?'+Date.now());const t=await r.text();if(t===last)return;last=t;render(JSON.parse(t))}catch(x){}}
+function info(c,big){const inb=c.direction=='inbound';
+const ct=[c.company,c.type].filter(Boolean).map(e).join(' • ');
+const sz=[c.gt?n(c.gt)+' GT':'',c.length_ft?(c.width_ft?`${n(c.length_ft)}' L x ${n(c.width_ft)}' W`:`${n(c.length_ft)}' L`):''].filter(Boolean).join(' • ');
+const L=[];if(c.origin_label)L.push('Origin: '+e(c.origin_label));if(c.dest_label)L.push('Destination: '+e(c.dest_label));
+L.push([c.sog!=null?c.sog+' knots':'',(c.when||(c.date+' '+c.time))].filter(Boolean).join(' • '));
+if(c.pilot)L.push(e(c.pilot_label||'Pilot')+': '+e(c.pilot));
+const arr=(!inb&&c.arrived)?e(c.arrived):'';
+const dir=`<span class="badge ${inb?'bin':'bout'}">${inb?'▶':'◀'}</span>`+(inb?'Inbound under the Golden Gate into the Bay.':'Outbound under the Golden Gate to the Pacific.');
+const line2=(ct?`<span class="ct">${ct}</span>`:'')+(ct&&sz?' • ':'')+sz;
+if(big)return `<div class="nm">${e(c.name)} ${flag(c.flag)} ${e(c.flag||'')}</div>${line2?`<div class="ln">${line2}</div>`:''}<div class="gap"></div>${L.map(x=>`<div class="ln">${x}</div>`).join('')}${arr?`<div class="gap"></div><div class="ln">${arr}</div>`:''}<div class="dir ${inb?'in':'out'}">${dir}</div>`;
+return `<div class="t">${e(c.name)} ${flag(c.flag)} ${e(c.flag||'')}</div>${line2?`<div>${line2}</div>`:''}<div class="muted">${L.join(' · ')}${arr?' · '+arr:''}</div><div class="${inb?'in':'out'}">${dir}</div>`}
+function render(d){document.getElementById('upd').textContent='Updated '+d.updated;
+const h=d.crossings[0];if(h){const hero=document.getElementById('hero');
+hero.className='card'+(h.card?' hascard':'');
+hero.innerHTML=(h.card?`<img id="cardimg" src="${h.card}">`:`<div id="imgs">${h.photo?`<img src="${h.photo}">`:''}${h.map?`<img src="${h.map}">`:''}</div>`)+`<div>${info(h,true)}</div>`}
+document.getElementById('recent').innerHTML='<h2>Recent crossings</h2>'+d.crossings.slice(1,10).map(c=>`<div class="xr">${info(c,false)}</div>`).join('');
+const an=document.getElementById('anch');const A=d.anchorage;if(A&&(A.ships||A.img)){an.style.display='';const S=A.ships||[];const G={};(A.groups||[]).forEach(g=>G[g.k]=g);
+an.innerHTML=`<h2>Anchorage 9 <span class="muted" style="text-transform:none;letter-spacing:0">· ${S.length} at anchor · ${e(A.when||A.img_when||'')}</span></h2><div class="ab">`+
+(A.img?`<a class="th" href="${A.img}" target="_blank"><img src="${A.img}" alt="Anchorage 9 map"><span>Tap for full card</span></a>`:'')+
+`<div>${S.map(x=>{const c=(G[x.group]||{}).color||'#999';return `<div class="ar"><span class="dot" style="background:${c}"></span><span class="nmx">${e(x.name)} ${flag(x.flag)}</span><span class="wf">${x.waiting_for?'Waiting for: '+e(x.waiting_for):''}</span><span class="w" style="color:${c}">${x.wait?e(x.wait):''}</span></div>`}).join('')}
+<div class="lg">${(A.groups||[]).filter(g=>S.some(x=>x.group==g.k)).map(g=>`<span><i style="background:${g.color}"></i>${e(g.label)}</span>`).join('')}</div></div></div>`}else an.style.display='none';
+document.getElementById('exp').innerHTML='<h2>Expected next 24h</h2>'+(d.expected.length?d.expected.slice(0,6).map(x=>`<div class="row"><span>${e(x.name)} · ${e(x.type||'')}${x.gt?' · '+n(x.gt)+' GT':''}</span><span class="muted">${e(x.eta)} → ${e(x.port||x.dest||'')}</span></div>`).join(''):'<div class="row muted">No expected arrivals listed</div>');
+const cm=document.getElementById('cam');if(d.cam){cm.style.display='';cm.innerHTML=`<h2>${e(d.cam.ship)} bridge cam</h2><img src="${d.cam.url}?${Date.now()}">`}else cm.style.display='none'}
+load();setInterval(load,60000);document.addEventListener("visibilitychange",()=>{if(!document.hidden)load()});
+</script></body></html>
